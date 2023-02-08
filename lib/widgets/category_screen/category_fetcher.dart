@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../models/database_provider.dart';
 import './category_list.dart';
+import './total_chart.dart';
 
 class CategoryFetcher extends StatefulWidget {
   const CategoryFetcher({super.key});
@@ -33,7 +34,18 @@ class _CategoryFetcherState extends State<CategoryFetcher> {
           if (snapshot.hasError) {
             return Center(child: Text(snapshot.error.toString()));
           } else {
-            return const CategoryList();
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                children: const [
+                  SizedBox(
+                    height: 250.0,
+                    child: TotalChart(),
+                  ),
+                  Expanded(child: CategoryList()),
+                ],
+              ),
+            );
           }
         } else {
           return const Center(child: CircularProgressIndicator());

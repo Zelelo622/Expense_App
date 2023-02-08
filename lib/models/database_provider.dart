@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -115,6 +116,21 @@ class DatabaseProvider with ChangeNotifier {
     });
   }
 
+  Future<List<Expense>> fetchExpenses(String category) async {
+    final db = await database;
+    return await db.transaction((txn) async {
+      return await txn.query(eTable,
+          where: 'category == ?', whereArgs: [category]).then((data) {
+        final converted = List<Map<String, dynamic>>.from(data);
+        //
+        List<Expense> nList = List.generate(
+            converted.length, (index) => Expense.fromString(converted[index]));
+        _expenses = nList;
+        return _expenses;
+      });
+    });
+  }
+
   ExpenseCategory findCategory(String title) {
     return _categories.firstWhere((element) => element.title == title);
   }
@@ -126,5 +142,10 @@ class DatabaseProvider with ChangeNotifier {
       total += i.amount;
     }
     return {'entries': list.length, 'totalAmount': total};
+  }
+
+  double calculateTotalExpenses() {
+    return _categories.fold(
+        0.0, (previousValue, element) => previousValue + element.totalAmount);
   }
 }

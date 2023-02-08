@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import './models/database_provider.dart';
 // screens
 import './screens/category_screen.dart';
+import './screens/expense_screen.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
       initialRoute: CategoryScreen.name,
       routes: {
         CategoryScreen.name: (_) => const CategoryScreen(),
+        ExpenseScreen.name: (_) => const ExpenseScreen(),
       },
     );
   }
