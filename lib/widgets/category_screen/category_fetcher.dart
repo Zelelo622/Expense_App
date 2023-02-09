@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../models/database_provider.dart';
 import './category_list.dart';
 import './total_chart.dart';
+import '../../screens/all_expenses.dart';
 
 class CategoryFetcher extends StatefulWidget {
   const CategoryFetcher({super.key});
@@ -37,12 +38,29 @@ class _CategoryFetcherState extends State<CategoryFetcher> {
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
-                children: const [
-                  SizedBox(
+                children: [
+                  const SizedBox(
                     height: 250.0,
                     child: TotalChart(),
                   ),
-                  Expanded(child: CategoryList()),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'Expenses',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pushNamed(AllExpenses.name);
+                        },
+                        child: const Text('View All'),
+                      ),
+                    ],
+                  ),
+                  const Expanded(child: CategoryList()),
                 ],
               ),
             );

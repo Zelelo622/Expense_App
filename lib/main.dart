@@ -4,6 +4,7 @@ import './models/database_provider.dart';
 // screens
 import './screens/category_screen.dart';
 import './screens/expense_screen.dart';
+import './screens/all_expenses.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       routes: {
         CategoryScreen.name: (_) => const CategoryScreen(),
         ExpenseScreen.name: (_) => const ExpenseScreen(),
+        AllExpenses.name: (_) => const AllExpenses(),
       },
     );
   }

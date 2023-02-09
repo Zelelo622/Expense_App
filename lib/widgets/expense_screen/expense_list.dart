@@ -11,9 +11,13 @@ class ExpenseList extends StatelessWidget {
     return Consumer<DatabaseProvider>(
       builder: (_, db, __) {
         var exList = db.expenses;
-        return ListView.builder(
-            itemCount: exList.length,
-            itemBuilder: (_, i) => ExpenseCard(exList[i]));
+        return exList.isNotEmpty
+            ? ListView.builder(
+                itemCount: exList.length,
+                itemBuilder: (_, i) => ExpenseCard(exList[i]))
+            : const Center(
+                child: Text('No Expenses Added'),
+              );
       },
     );
   }

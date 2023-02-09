@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import '../../models/expense.dart';
+import '../../models/database_provider.dart';
 import '../../constants/icons.dart';
+import './confirm_box.dart';
 
 class ExpenseCard extends StatelessWidget {
   final Expense exp;
@@ -9,17 +12,25 @@ class ExpenseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Icon(icons[exp.category]),
+    final provider = Provider.of<DatabaseProvider>(context, listen: false);
+    return Dismissible(
+      key: ValueKey(exp.id),
+      confirmDismiss: (_) async {
+        showDialog(
+          context: context,
+          builder: (_) => ConfirmBox(exp: exp),
+        );
+      },
+      child: ListTile(
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Icon(icons[exp.category]),
+        ),
+        title: Text(exp.title),
+        subtitle: Text(DateFormat('MMM dd, yyyy').format(exp.date)),
+        trailing: Text(NumberFormat.currency(locale: 'en_IN', symbol: '₽')
+            .format(exp.amount)),
       ),
-      title: Text(exp.title),
-      subtitle: Text(DateFormat('MMM dd, yyyy').format(exp.date)),
-      trailing: Text(NumberFormat.currency(
-        locale: 'en_IN',
-        symbol: '₽'
-      ).format(exp.amount)),
     );
   }
 }

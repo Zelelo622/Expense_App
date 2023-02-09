@@ -7,11 +7,27 @@ import './ex_category.dart';
 import './expense.dart';
 
 class DatabaseProvider with ChangeNotifier {
+  String _searchText = '';
+  String get searchText => _searchText;
+  set searchText(String value) {
+    _searchText = value;
+    notifyListeners();
+    // when the value of the search text changes it will notify the widgets.
+  }
+
   List<ExpenseCategory> _categories = [];
   List<ExpenseCategory> get categories => _categories;
 
   List<Expense> _expenses = [];
-  List<Expense> get expenses => _expenses;
+  // when the search text is empty, return whole list, else search for the value
+  List<Expense> get expenses {
+    return _searchText != ''
+        ? _expenses
+            .where((e) =>
+                e.title.toLowerCase().contains(_searchText.toLowerCase()))
+            .toList()
+        : _expenses;
+  }
 
   Database? _database;
   Future<Database> get database async {
@@ -116,6 +132,21 @@ class DatabaseProvider with ChangeNotifier {
     });
   }
 
+  Future<void> deleteExpense(int expId, String category, double amount) async {
+    final db = await database;
+    await db.transaction((txn) async {
+      await txn.delete(eTable, where: 'id == ?', whereArgs: [expId]).then((_) {
+        // remove from in-app memory too
+        _expenses.removeWhere((element) => element.id == expId);
+        notifyListeners();
+        // we have to update the entries and totalamount too
+
+        var ex = findCategory(category);
+        updateCategory(category, ex.entries - 1, ex.totalAmount - amount);
+      });
+    });
+  }
+
   Future<List<Expense>> fetchExpenses(String category) async {
     final db = await database;
     return await db.transaction((txn) async {
@@ -123,6 +154,19 @@ class DatabaseProvider with ChangeNotifier {
           where: 'category == ?', whereArgs: [category]).then((data) {
         final converted = List<Map<String, dynamic>>.from(data);
         //
+        List<Expense> nList = List.generate(
+            converted.length, (index) => Expense.fromString(converted[index]));
+        _expenses = nList;
+        return _expenses;
+      });
+    });
+  }
+
+  Future<List<Expense>> fetchAllExpenses() async {
+    final db = await database;
+    return await db.transaction((txn) async {
+      return await txn.query(eTable).then((data) {
+        final converted = List<Map<String, dynamic>>.from(data);
         List<Expense> nList = List.generate(
             converted.length, (index) => Expense.fromString(converted[index]));
         _expenses = nList;
@@ -153,13 +197,13 @@ class DatabaseProvider with ChangeNotifier {
     List<Map<String, dynamic>> data = [];
 
     for (int i = 0; i < 7; i++) {
-      double total  = 0.0;
+      double total = 0.0;
       final weekDay = DateTime.now().subtract(Duration(days: i));
 
       for (int j = 0; j < _expenses.length; j++) {
         if (_expenses[j].date.year == weekDay.year &&
-        _expenses[j].date.month == weekDay.month && 
-        _expenses[j].date.day == weekDay.day) {
+            _expenses[j].date.month == weekDay.month &&
+            _expenses[j].date.day == weekDay.day) {
           total += _expenses[j].amount;
         }
       }
