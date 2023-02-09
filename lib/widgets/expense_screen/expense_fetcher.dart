@@ -3,6 +3,7 @@ import './expense_list.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import './expense_chart.dart';
 
 class ExpenseFetcher extends StatefulWidget {
   final String category;
@@ -34,7 +35,15 @@ class _ExpenseFetcherState extends State<ExpenseFetcher> {
           if (snapshot.hasError) {
             return Center(child: Text(snapshot.error.toString()));
           } else {
-            return const ExpenseList();
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: Column(
+                children: [
+                  SizedBox(height: 250.0, child: ExpenseChart(widget.category),),
+                  const Expanded(child: ExpenseList()),
+                ],
+              ),
+            );
           }
         } else {
           return const Center(child: CircularProgressIndicator());
