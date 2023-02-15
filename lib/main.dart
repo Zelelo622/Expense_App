@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
       routes: {
         CategoryScreen.name: (_) => const CategoryScreen(),
         ExpenseScreen.name: (_) => const ExpenseScreen(),
-        AllExpenses.name: (_) => const AllExpenses(),
+        AllExpenses.name: (_) => const AllExpenses()
       },
     );
   }
