@@ -9,7 +9,7 @@ class ExpenseScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final category = ModalRoute.of(context)!.settings.arguments as String;
     return Scaffold(
-      appBar: AppBar(title: const Text('Expense Screen')),
+      appBar: AppBar(title: const Text('Экран расходов')),
       body: ExpenseFetcher(category),
     );
   }

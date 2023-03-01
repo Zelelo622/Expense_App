@@ -47,7 +47,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
             TextField(
               controller: _title,
               decoration: const InputDecoration(
-                labelText: 'Title of expense',
+                labelText: 'Наименование расходов',
               ),
             ),
             const SizedBox(height: 20.0),
@@ -56,7 +56,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
               controller: _amount,
               keyboardType: TextInputType.number,
               decoration: const InputDecoration(
-                labelText: 'Amount of expense',
+                labelText: 'Сумма расходов',
               ),
             ),
             const SizedBox(height: 20.0),
@@ -66,7 +66,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
                 Expanded(
                     child: Text(_date != null
                         ? DateFormat('MMM dd, yyyy').format(_date!)
-                        : 'Select Date')),
+                        : 'Выберите дату')),
                 IconButton(
                   onPressed: () => _pickDate(),
                   icon: const Icon(Icons.calendar_month),
@@ -80,7 +80,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
             Row(
               children: [
                 const Expanded(
-                  child: Text('Category'),
+                  child: Text('Категория'),
                 ),
                 Expanded(
                     child: DropdownButton(
@@ -121,7 +121,7 @@ class _ExpenseFormState extends State<ExpenseForm> {
                 }
               },
               icon: const Icon(Icons.add),
-              label: const Text('Add Expense'),
+              label: const Text('Добавить расходов'),
             ),
           ],
         ),

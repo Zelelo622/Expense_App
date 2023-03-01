@@ -15,7 +15,7 @@ class ConfirmBox extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = Provider.of<DatabaseProvider>(context, listen: false);
     return AlertDialog(
-      title: Text('Delete ${exp.title} ?'),
+      title: Text('Удалить ${exp.title} ?'),
       content: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
@@ -23,7 +23,7 @@ class ConfirmBox extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).pop(false); // dont delete
             },
-            child: const Text('Don\'t delete'),
+            child: const Text('Не удалять'),
           ),
           const SizedBox(width: 5.0),
           ElevatedButton(
@@ -31,7 +31,7 @@ class ConfirmBox extends StatelessWidget {
               Navigator.of(context).pop(true); // delete
               provider.deleteExpense(exp.id, exp.category, exp.amount);
             },
-            child: const Text('Delete'),
+            child: const Text('Удалить'),
           ),
         ],
       ),

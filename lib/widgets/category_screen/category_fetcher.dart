@@ -47,7 +47,7 @@ class _CategoryFetcherState extends State<CategoryFetcher> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const Text(
-                        'Expenses',
+                        'Расходы',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
@@ -56,7 +56,7 @@ class _CategoryFetcherState extends State<CategoryFetcher> {
                         onPressed: () {
                           Navigator.of(context).pushNamed(AllExpenses.name);
                         },
-                        child: const Text('View All'),
+                        child: const Text('Показать все'),
                       ),
                     ],
                   ),

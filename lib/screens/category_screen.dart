@@ -9,7 +9,7 @@ class CategoryScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Categories'),
+        title: const Text('Категории'),
       ),
       body: const CategoryFetcher(),
       floatingActionButton: FloatingActionButton(onPressed: () {

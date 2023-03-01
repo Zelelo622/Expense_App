@@ -16,7 +16,7 @@ class ExpenseList extends StatelessWidget {
                 itemCount: exList.length,
                 itemBuilder: (_, i) => ExpenseCard(exList[i]))
             : const Center(
-                child: Text('No Expenses Added'),
+                child: Text('Никаких дополнительных расходов'),
               );
       },
     );

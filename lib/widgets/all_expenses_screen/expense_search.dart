@@ -18,7 +18,7 @@ class _ExpenseSearchState extends State<ExpenseSearch> {
         provider.searchText = value;
       },
       decoration: const InputDecoration(
-        labelText: 'Search Expenses',
+        labelText: 'Расходы на поиск',
       ),
     );
   }

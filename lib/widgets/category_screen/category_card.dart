@@ -19,7 +19,7 @@ class CategoryCard extends StatelessWidget {
         child: Icon(category.icon),
       ),
       title: Text(category.title),
-      subtitle: Text('entries: ${category.entries}'),
+      subtitle: Text('записи: ${category.entries}'),
       trailing: Text(NumberFormat.currency(locale: 'en_IN', symbol: '₽')
           .format(category.totalAmount)),
     );

@@ -19,7 +19,7 @@ class AllExpensesList extends StatelessWidget {
                 itemBuilder: (_, i) => ExpenseCard(list[i]),
               )
             : const Center(
-              child: Text('No Entries Found'),
+              child: Text('Записей не найдено'),
             );
       },
     );
